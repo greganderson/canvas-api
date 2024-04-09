@@ -4,10 +4,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 import requests
 
-from models import Course, Discussion
+from models import Course, Discussion, DiscussionEntry
 
-# /courses/:course_id/discussion_topics
-# /courses
 
 load_dotenv()
 
@@ -45,3 +43,9 @@ async def get_discussions(course_id: int) -> list[Discussion]:
         discussions.append(discussion)
 
     return discussions
+
+@app.post("/discussions/entries")
+async def create_discussion_entry(course_id: int, topic_id: int, body: DiscussionEntry):
+    return requests.post(url=f"{base_url}/courses/{course_id}/discussion_topics/{topic_id}/entries",
+                         headers=headers,
+                         data=body.model_dump()).json()

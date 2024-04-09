@@ -8,3 +8,6 @@ class Course(BaseModel):
 class Discussion(BaseModel):
     id: int
     title: str
+
+class DiscussionEntry(BaseModel):
+    message: str
